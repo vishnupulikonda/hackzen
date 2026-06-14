@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hackathon Registration Form</title>
+  <title>HackZen Registration Form</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Google Sans', Roboto, Arial, sans-serif; background: #f0ebf8; min-height: 100vh; padding: 0 0 60px 0; }
@@ -57,17 +57,17 @@
       <p style="font-size:11px;letter-spacing:3px;color:#00e5ff;text-transform:uppercase;font-family:monospace;position:relative;z-index:1;">CODE. INNOVATE. ELEVATE.</p>
       <div style="position:relative;z-index:1;line-height:1;display:flex;align-items:center;gap:16px;">
         <div style="display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0.92;">
-          <div style="font-size:28px;filter:drop-shadow(0 0 8px #00e5ff);">ðŸ¤–</div>
-          <div style="font-size:18px;filter:drop-shadow(0 0 6px #a855f7);">ðŸ§ </div>
-          <div style="font-size:14px;filter:drop-shadow(0 0 4px #00b4ff);">âš¡</div>
+          <div style="font-size:28px;filter:drop-shadow(0 0 8px #00e5ff);">&#x1F916;</div>
+          <div style="font-size:18px;filter:drop-shadow(0 0 6px #a855f7);">&#x1F9E0;</div>
+          <div style="font-size:14px;filter:drop-shadow(0 0 4px #00b4ff);">&#x26A1;</div>
         </div>
         <div>
           <span style="font-size:56px;font-weight:900;color:#ffffff;font-family:'Arial Black',Arial,sans-serif;letter-spacing:-2px;text-shadow:0 0 30px rgba(255,255,255,0.25);">HACK</span><span style="font-size:56px;font-weight:900;background:linear-gradient(135deg,#00b4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Arial Black',Arial,sans-serif;letter-spacing:-2px;">ZEN</span>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0.92;">
-          <div style="font-size:28px;filter:drop-shadow(0 0 8px #a855f7);">ðŸ’¡</div>
-          <div style="font-size:18px;filter:drop-shadow(0 0 6px #00e5ff);">ðŸ”¬</div>
-          <div style="font-size:14px;filter:drop-shadow(0 0 4px #a855f7);">ðŸš€</div>
+          <div style="font-size:28px;filter:drop-shadow(0 0 8px #a855f7);">&#x1F4A1;</div>
+          <div style="font-size:18px;filter:drop-shadow(0 0 6px #00e5ff);">&#x1F52C;</div>
+          <div style="font-size:14px;filter:drop-shadow(0 0 4px #a855f7);">&#x1F680;</div>
         </div>
       </div>
       <div style="position:relative;z-index:1;border:1px solid #00e5ff;border-radius:6px;padding:6px 20px;margin-top:4px;">
@@ -100,8 +100,8 @@
     </div>
 
     <div class="card" id="card-name">
-      <span class="question-label">Fellow hacker, can we get your full name? <span class="req">*</span></span>
-      <div class="field-wrap"><input type="text" id="name" placeholder="Your answer" /></div>
+      <span class="question-label">Full Name <span class="req">*</span></span>
+      <div class="field-wrap"><input type="text" id="name" placeholder="Enter your full name" /></div>
       <span class="error-text" id="name-error">Please enter your full name.</span>
     </div>
 
@@ -182,10 +182,10 @@
         <div class="member-row"><div class="field-wrap"><input type="text" class="member-input" placeholder="Member 1 name" /></div></div>
         <div class="member-row">
           <div class="field-wrap"><input type="text" class="member-input" placeholder="Member 2 name" /></div>
-          <button type="button" class="btn-remove" onclick="removeMember(this)" aria-label="Remove">Ã—</button>
+          <button type="button" class="btn-remove" onclick="removeMember(this)" aria-label="Remove">&times;</button>
         </div>
       </div>
-      <button type="button" class="btn-add-member" onclick="addMember()">ï¼‹ Add another member</button>
+      <button type="button" class="btn-add-member" onclick="addMember()">+ Add another member</button>
       <span class="error-text" id="members-error">Please add at least one team member name.</span>
     </div>
 
@@ -195,14 +195,14 @@
       <p style="font-size:13px;color:#5f6368;margin-bottom:18px;">Scan the QR code below to pay, then enter your UTR number.</p>
       <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:20px;">
         <div style="border:5px solid #00b9f1;border-bottom-color:#1a237e;border-radius:16px;padding:8px;background:#fff;display:inline-block;box-shadow:0 4px 16px rgba(21,101,192,0.2);">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9502296882@ptaxis&pn=Hackathon&cu=INR" alt="UPI QR" width="200" height="200" style="display:block;border-radius:8px;" />
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9502296882@ptaxis&pn=Hackathon&cu=INR" alt="UPI QR Code" width="200" height="200" style="display:block;border-radius:8px;" />
         </div>
-        <p style="font-size:13px;color:#1565c0;font-weight:600;margin-top:10px;text-align:center;">ðŸ“± Scan &amp; Pay using any UPI app</p>
-        <p style="font-size:12px;color:#5f6368;margin-top:4px;text-align:center;">GPay Â· PhonePe Â· Paytm Â· Any UPI App</p>
+        <p style="font-size:13px;color:#1565c0;font-weight:600;margin-top:10px;text-align:center;">Scan &amp; Pay using any UPI app</p>
+        <p style="font-size:12px;color:#5f6368;margin-top:4px;text-align:center;">GPay &middot; PhonePe &middot; Paytm &middot; Any UPI App</p>
         <p style="font-size:12px;color:#5f6368;margin-top:4px;text-align:center;">UPI ID: <strong style="color:#202124;">9502296882@ptaxis</strong></p>
       </div>
       <span class="question-label" style="margin-bottom:8px;">UTR / Transaction Reference Number <span class="req">*</span></span>
-      <p style="font-size:12px;color:#5f6368;margin-bottom:10px;">Enter the 12-digit UTR from your UPI app after payment.</p>
+      <p style="font-size:12px;color:#5f6368;margin-bottom:10px;">Enter the UTR number from your UPI app after payment.</p>
       <div class="field-wrap"><input type="text" id="utr" placeholder="e.g. 123456789012" maxlength="22" style="letter-spacing:1px;" /></div>
       <span class="error-text" id="utr-error">Please enter a valid UTR / Transaction Reference Number.</span>
     </div>
@@ -218,7 +218,7 @@
     <!-- WhatsApp -->
     <div class="card" style="border-left:5px solid #25D366;">
       <div style="display:flex;align-items:center;gap:14px;">
-        <div style="font-size:40px;flex-shrink:0;">ðŸ’¬</div>
+        <div style="font-size:40px;flex-shrink:0;">&#x1F4AC;</div>
         <div>
           <p style="font-size:15px;font-weight:600;color:#202124;margin-bottom:4px;">Join our WhatsApp Community</p>
           <p style="font-size:13px;color:#5f6368;margin-bottom:12px;">Get updates, announcements, and connect with fellow participants.</p>
@@ -239,16 +239,16 @@
 
   <!-- Success Screen -->
   <div class="success-screen" id="successScreen">
-    <div class="check-icon">ðŸŽ‰</div>
+    <div class="check-icon">&#x1F389;</div>
     <h2>Registration Successful!</h2>
     <p id="successMsg" style="font-size:15px;color:#202124;margin-bottom:8px;font-weight:500;"></p>
-    <p style="font-size:13px;color:#5f6368;margin-top:8px;">Our team will verify your payment and reach out to you soon.<br/>Stay tuned and join our WhatsApp community for updates!</p>
+    <p style="font-size:13px;color:#5f6368;margin-top:8px;">Our team will verify your payment and contact you soon.<br/>Stay tuned and join our WhatsApp community for updates!</p>
     <div style="margin-top:20px;background:#f0fff4;border:1px solid #c6f6d5;border-radius:8px;padding:16px 20px;text-align:left;max-width:420px;margin-left:auto;margin-right:auto;">
-      <p style="font-size:13px;color:#276749;font-weight:600;margin-bottom:8px;">ðŸ“‹ Your Registration Summary</p>
+      <p style="font-size:13px;color:#276749;font-weight:600;margin-bottom:8px;">Your Registration Summary</p>
       <div id="summaryBox" style="font-size:13px;color:#2d3748;line-height:2;"></div>
     </div>
     <a href="https://chat.whatsapp.com/CfTMPOHeY4Q4rYTprjYurA" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;text-decoration:none;padding:10px 22px;border-radius:6px;font-size:14px;font-weight:600;margin-top:20px;" onmouseover="this.style.background='#1ebe5d'" onmouseout="this.style.background='#25D366'">
-      ðŸ’¬ Join WhatsApp Community
+      Join WhatsApp Community
     </a>
   </div>
 
@@ -258,7 +258,7 @@
       const count = list.querySelectorAll('.member-row').length + 1;
       const row = document.createElement('div');
       row.className = 'member-row';
-      row.innerHTML = `<div class="field-wrap"><input type="text" class="member-input" placeholder="Member ${count} name" /></div><button type="button" class="btn-remove" onclick="removeMember(this)" aria-label="Remove">Ã—</button>`;
+      row.innerHTML = '<div class="field-wrap"><input type="text" class="member-input" placeholder="Member ' + count + ' name" /></div><button type="button" class="btn-remove" onclick="removeMember(this)" aria-label="Remove">&times;</button>';
       list.appendChild(row);
     }
 
@@ -292,18 +292,18 @@
       check(!document.getElementById('teamname').value.trim(), 'teamname-error', 'Please enter your team name.', 'card-teamname');
       check(!Array.from(document.querySelectorAll('.member-input')).some(i => i.value.trim()), 'members-error', 'Please add at least one member.', 'card-members');
       check(!document.getElementById('utr').value.trim() || document.getElementById('utr').value.trim().length < 8, 'utr-error', 'Please enter a valid UTR number.', 'card-payment');
-      check(!document.getElementById('terms').checked, 'terms-error', 'You must accept the terms.', 'card-terms');
+      check(!document.getElementById('terms').checked, 'terms-error', 'You must accept the terms to proceed.', 'card-terms');
 
       if (first) scrollToCard(first);
       return valid;
     }
 
-    // â”€â”€ Supabase REST API â”€â”€
+    // Supabase REST API
     const SB_URL = 'https://npbtoautxpcsfpgepbhh.supabase.co';
     const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wYnRvYXV0eHBjc2ZwZ2VwYmhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NDk5OTcsImV4cCI6MjA5NzAyNTk5N30.Gesev7I1fhOLjPAadKwqUALnMWHthBA6bOL-6fgPN1U';
 
     async function saveToSupabase(payload) {
-      const res = await fetch(`${SB_URL}/rest/v1/registrations`, {
+      const res = await fetch(SB_URL + '/rest/v1/registrations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -319,26 +319,10 @@
       }
     }
 
-    // â”€â”€ Save to localStorage backup â”€â”€
-    function saveRegistration(row) {
+    function saveToLocal(row) {
       const all = JSON.parse(localStorage.getItem('hackzen_registrations') || '[]');
       all.push(row);
       localStorage.setItem('hackzen_registrations', JSON.stringify(all));
-    }
-
-    // â”€â”€ CSV download â”€â”€
-    function downloadCSV(rows, filename) {
-      const esc = v => { const s = String(v||''); return (s.includes(',')||s.includes('"')||s.includes('\n')) ? '"'+s.replace(/"/g,'""')+'"' : s; };
-      const csv = rows.map(r => r.map(esc).join(',')).join('\n');
-      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([csv],{type:'text/csv'})), download: filename });
-      a.click(); URL.revokeObjectURL(a.href);
-    }
-
-    function downloadAllRegistrations() {
-      const all = JSON.parse(localStorage.getItem('hackzen_registrations') || '[]');
-      if (!all.length) { alert('No registrations yet.'); return; }
-      downloadCSV([["Timestamp","Name","Email","Phone","Year","Branch","Institution","City","Pincode","Hackathon Experience","Team Name","Team Members","UTR"], ...all],
-        'HackZen_All_' + new Date().toISOString().slice(0,10) + '.csv');
     }
 
     document.getElementById('regForm').addEventListener('submit', async function (e) {
@@ -346,7 +330,7 @@
       if (!validateForm()) return;
 
       const btn = document.querySelector('.btn-submit');
-      btn.textContent = 'Saving...';
+      btn.textContent = 'Submitting...';
       btn.disabled = true;
 
       const members = Array.from(document.querySelectorAll('.member-input'))
@@ -363,46 +347,36 @@
         pincode:       document.getElementById('pincode').value.trim(),
         hackathon_exp: document.querySelector('input[name="hackathon_exp"]:checked')?.value || '',
         teamname:      document.getElementById('teamname').value.trim(),
-        members,
+        members:       members,
         utr:           document.getElementById('utr').value.trim()
       };
 
       try {
         await saveToSupabase(payload);
-        console.log('âœ… Saved to Supabase');
-
-        // local backup
-        const row = [new Date().toLocaleString('en-IN'), payload.name, payload.email,
+        saveToLocal([new Date().toLocaleString('en-IN'), payload.name, payload.email,
           payload.phone, payload.year, payload.branch, payload.institution,
           payload.city, payload.pincode, payload.hackathon_exp,
-          payload.teamname, payload.members, payload.utr];
-        saveRegistration(row);
+          payload.teamname, payload.members, payload.utr]);
 
-        // Fill personalized success screen
         const displayName = payload.name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-        document.getElementById('successMsg').textContent =
-          `Hey ${displayName}! You're all set. ðŸš€`;
-        document.getElementById('summaryBox').innerHTML = `
-          <b>Team:</b> ${payload.teamname}<br/>
-          <b>Members:</b> ${payload.members}<br/>
-          <b>Institution:</b> ${payload.institution}<br/>
-          <b>Email:</b> ${payload.email}<br/>
-          <b>UTR:</b> ${payload.utr}
-        `;
+        document.getElementById('successMsg').textContent = 'Hey ' + displayName + '! You are all set.';
+        document.getElementById('summaryBox').innerHTML =
+          '<b>Team:</b> ' + payload.teamname + '<br/>' +
+          '<b>Members:</b> ' + payload.members + '<br/>' +
+          '<b>Institution:</b> ' + payload.institution + '<br/>' +
+          '<b>Email:</b> ' + payload.email + '<br/>' +
+          '<b>UTR:</b> ' + payload.utr;
 
         document.getElementById('regForm').style.display = 'none';
         document.getElementById('successScreen').style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
       } catch (err) {
-        console.error('Save error:', err);
         btn.textContent = 'Submit';
         btn.disabled = false;
-        alert('âŒ Failed to save: ' + err.message);
+        alert('Submission failed. Please try again.\n\n' + err.message);
       }
     });
   </script>
 </body>
 </html>
-
-
