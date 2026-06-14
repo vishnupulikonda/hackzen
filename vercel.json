@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "hackathon-registration/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/hackathon-registration/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/hackathon-registration/index.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "/hackathon-registration/admin.html"
+    }
+  ]
+}
