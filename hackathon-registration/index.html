@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hackathon Registration Form</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Google Sans', Roboto, Arial, sans-serif; background: #f0ebf8; min-height: 100vh; padding: 0 0 60px 0; }
+    .card { background: #fff; max-width: 700px; margin: 0 auto 12px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); padding: 24px 28px; }
+    .title-card { border-top: 10px solid #673ab7; border-radius: 0 0 8px 8px; margin-top: 0; }
+    .title-card h1 { font-size: 30px; font-weight: 400; color: #202124; margin-bottom: 10px; }
+    .title-card p { font-size: 14px; color: #202124; line-height: 1.5; margin-bottom: 14px; }
+    .divider { border: none; border-top: 1px solid #e0e0e0; margin: 14px 0; }
+    .required-note { color: #d93025; font-size: 13px; margin-top: 12px; }
+    .question-label { font-size: 15px; font-weight: 500; color: #202124; margin-bottom: 16px; display: block; }
+    .question-label .req { color: #d93025; margin-left: 4px; }
+    .field-wrap { border-bottom: 1px solid #9e9e9e; padding-bottom: 4px; transition: border-color 0.2s; max-width: 440px; }
+    .field-wrap:focus-within { border-bottom: 2px solid #673ab7; }
+    .field-wrap input, .field-wrap textarea { width: 100%; border: none; outline: none; font-size: 14px; color: #202124; background: transparent; padding: 4px 0; font-family: inherit; }
+    .field-wrap textarea { resize: vertical; min-height: 60px; }
+    .field-wrap input::placeholder, .field-wrap textarea::placeholder { color: #9e9e9e; font-size: 13px; }
+    .select-wrap { max-width: 440px; border-bottom: 1px solid #9e9e9e; padding-bottom: 4px; transition: border-color 0.2s; }
+    .select-wrap:focus-within { border-bottom: 2px solid #673ab7; }
+    .select-wrap select { width: 100%; border: none; outline: none; font-size: 14px; color: #202124; background: transparent; padding: 4px 0; font-family: inherit; cursor: pointer; appearance: auto; }
+    .options-list { display: flex; flex-direction: column; gap: 14px; }
+    .option-item { display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 14px; color: #202124; }
+    .option-item input[type="radio"], .option-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #673ab7; cursor: pointer; flex-shrink: 0; }
+    #members-list { display: flex; flex-direction: column; gap: 12px; max-width: 440px; }
+    .member-row { display: flex; align-items: flex-end; gap: 10px; }
+    .member-row .field-wrap { flex: 1; margin: 0; }
+    .btn-remove { background: none; border: none; cursor: pointer; color: #9e9e9e; font-size: 20px; padding: 0 4px; line-height: 1; transition: color 0.2s; }
+    .btn-remove:hover { color: #d93025; }
+    .btn-add-member { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; background: none; border: none; color: #673ab7; font-size: 13px; font-weight: 500; cursor: pointer; padding: 6px 0; font-family: inherit; }
+    .btn-add-member:hover { text-decoration: underline; }
+    .terms-box { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 14px; font-size: 13px; color: #5f6368; max-height: 110px; overflow-y: auto; line-height: 1.6; margin-bottom: 14px; }
+    .error-text { font-size: 12px; color: #d93025; margin-top: 6px; display: none; }
+    .actions-row { max-width: 700px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .btn-submit { background: #673ab7; color: #fff; border: none; border-radius: 4px; padding: 12px 28px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+    .btn-submit:hover { background: #512da8; }
+    .btn-submit:disabled { background: #9e9e9e; cursor: not-allowed; }
+    .btn-clear { background: none; border: none; color: #673ab7; font-size: 14px; cursor: pointer; font-family: inherit; }
+    .btn-clear:hover { text-decoration: underline; }
+    .success-screen { display: none; max-width: 700px; margin: 24px auto; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); padding: 40px 32px; text-align: center; }
+    .success-screen .check-icon { font-size: 52px; margin-bottom: 16px; }
+    .success-screen h2 { font-size: 22px; font-weight: 400; color: #202124; margin-bottom: 10px; }
+    .success-screen p { font-size: 14px; color: #5f6368; }
+    @media (max-width: 740px) { .card { border-radius: 0; } .title-card { border-radius: 0; } }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <div style="max-width:700px;margin:24px auto 0;">
+    <div style="width:100%;background:linear-gradient(135deg,#050d1a 0%,#0a1628 40%,#0d1f3c 100%);border-radius:12px 12px 0 0;padding:28px 24px 24px;position:relative;overflow:hidden;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
+      <div style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.12;background-image:repeating-linear-gradient(0deg,transparent,transparent 38px,#00e5ff 38px,#00e5ff 39px),repeating-linear-gradient(90deg,transparent,transparent 38px,#00e5ff 38px,#00e5ff 39px);"></div>
+      <p style="font-size:11px;letter-spacing:3px;color:#00e5ff;text-transform:uppercase;font-family:monospace;position:relative;z-index:1;">CODE. INNOVATE. ELEVATE.</p>
+      <div style="position:relative;z-index:1;line-height:1;display:flex;align-items:center;gap:16px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0.92;">
+          <div style="font-size:28px;filter:drop-shadow(0 0 8px #00e5ff);">🤖</div>
+          <div style="font-size:18px;filter:drop-shadow(0 0 6px #a855f7);">🧠</div>
+          <div style="font-size:14px;filter:drop-shadow(0 0 4px #00b4ff);">⚡</div>
+        </div>
+        <div>
+          <span style="font-size:56px;font-weight:900;color:#ffffff;font-family:'Arial Black',Arial,sans-serif;letter-spacing:-2px;text-shadow:0 0 30px rgba(255,255,255,0.25);">HACK</span><span style="font-size:56px;font-weight:900;background:linear-gradient(135deg,#00b4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Arial Black',Arial,sans-serif;letter-spacing:-2px;">ZEN</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0.92;">
+          <div style="font-size:28px;filter:drop-shadow(0 0 8px #a855f7);">💡</div>
+          <div style="font-size:18px;filter:drop-shadow(0 0 6px #00e5ff);">🔬</div>
+          <div style="font-size:14px;filter:drop-shadow(0 0 4px #a855f7);">🚀</div>
+        </div>
+      </div>
+      <div style="position:relative;z-index:1;border:1px solid #00e5ff;border-radius:6px;padding:6px 20px;margin-top:4px;">
+        <span style="font-size:12px;letter-spacing:3px;color:#e0e0e0;font-weight:600;text-transform:uppercase;">BUILD THE FUTURE WITH </span><span style="font-size:12px;letter-spacing:3px;color:#00b4ff;font-weight:800;">AI</span>
+      </div>
+      <div style="position:relative;z-index:1;display:flex;align-items:center;gap:14px;margin-top:6px;">
+        <div style="background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:900;color:#fff;font-family:monospace;letter-spacing:1px;">AI</div>
+        <div style="width:1px;height:32px;background:rgba(255,255,255,0.25);"></div>
+        <div>
+          <p style="font-size:12px;color:#e0e0e0;font-weight:500;">AI-Powered Innovation.</p>
+          <p style="font-size:12px;color:#e0e0e0;font-weight:500;">Limitless Possibilities.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form id="regForm" novalidate>
+
+    <div class="card title-card">
+      <h1>HACKATHON REGISTRATION FORM</h1>
+      <p>Do you love innovation and challenges? Then you definitely want to join our hackathon. Fill in the details below and secure your spot!</p>
+      <hr class="divider" />
+      <p class="required-note">* Indicates required question</p>
+    </div>
+
+    <div class="card" id="card-email">
+      <span class="question-label">Email Address <span class="req">*</span></span>
+      <div class="field-wrap"><input type="email" id="email" placeholder="Your answer" autocomplete="email" /></div>
+      <span class="error-text" id="email-error">Please enter a valid email address.</span>
+    </div>
+
+    <div class="card" id="card-name">
+      <span class="question-label">Fellow hacker, can we get your full name? <span class="req">*</span></span>
+      <div class="field-wrap"><input type="text" id="name" placeholder="Your answer" /></div>
+      <span class="error-text" id="name-error">Please enter your full name.</span>
+    </div>
+
+    <div class="card" id="card-phone">
+      <span class="question-label">Phone Number <span class="req">*</span></span>
+      <div class="field-wrap"><input type="tel" id="phone" placeholder="10-digit mobile number" maxlength="10" /></div>
+      <span class="error-text" id="phone-error">Please enter a valid 10-digit phone number.</span>
+    </div>
+
+    <div class="card" id="card-year">
+      <span class="question-label">Year of Study <span class="req">*</span></span>
+      <div class="options-list">
+        <label class="option-item"><input type="radio" name="year" value="1st Year" /> 1st Year</label>
+        <label class="option-item"><input type="radio" name="year" value="2nd Year" /> 2nd Year</label>
+        <label class="option-item"><input type="radio" name="year" value="3rd Year" /> 3rd Year</label>
+        <label class="option-item"><input type="radio" name="year" value="4th Year" /> 4th Year</label>
+        <label class="option-item"><input type="radio" name="year" value="Other" /> Other</label>
+      </div>
+      <span class="error-text" id="year-error">Please select your year of study.</span>
+    </div>
+
+    <div class="card" id="card-branch">
+      <span class="question-label">Branch / Department <span class="req">*</span></span>
+      <div class="select-wrap">
+        <select id="branch">
+          <option value="">-- Select your branch --</option>
+          <option>Computer Science (CSE)</option>
+          <option>Information Technology (IT)</option>
+          <option>Electronics &amp; Communication (ECE)</option>
+          <option>Electrical &amp; Electronics (EEE)</option>
+          <option>Mechanical Engineering</option>
+          <option>Civil Engineering</option>
+          <option>AI &amp; Data Science (AIDS)</option>
+          <option>AI &amp; Machine Learning (AIML)</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <span class="error-text" id="branch-error">Please select your branch.</span>
+    </div>
+
+    <div class="card" id="card-institution">
+      <span class="question-label">Institution / College Name <span class="req">*</span></span>
+      <div class="field-wrap"><input type="text" id="institution" placeholder="Your answer" /></div>
+      <span class="error-text" id="institution-error">Please enter your institution name.</span>
+    </div>
+
+    <div class="card" id="card-city">
+      <span class="question-label">City <span class="req">*</span></span>
+      <div class="field-wrap"><input type="text" id="city" placeholder="Your answer" /></div>
+      <span class="error-text" id="city-error">Please enter your city.</span>
+    </div>
+
+    <div class="card" id="card-pincode">
+      <span class="question-label">Pincode <span class="req">*</span></span>
+      <div class="field-wrap"><input type="text" id="pincode" placeholder="6-digit pincode" maxlength="6" /></div>
+      <span class="error-text" id="pincode-error">Please enter a valid 6-digit pincode.</span>
+    </div>
+
+    <div class="card" id="card-exp">
+      <span class="question-label">Have you participated in a hackathon before? <span class="req">*</span></span>
+      <div class="options-list">
+        <label class="option-item"><input type="radio" name="hackathon_exp" value="Yes" /> Yes</label>
+        <label class="option-item"><input type="radio" name="hackathon_exp" value="No" /> No</label>
+      </div>
+      <span class="error-text" id="exp-error">Please select an option.</span>
+    </div>
+
+    <div class="card" id="card-teamname">
+      <span class="question-label">Team Name <span class="req">*</span></span>
+      <div class="field-wrap"><input type="text" id="teamname" placeholder="Your answer" /></div>
+      <span class="error-text" id="teamname-error">Please enter your team name.</span>
+    </div>
+
+    <div class="card" id="card-members">
+      <span class="question-label">Team Members <span class="req">*</span></span>
+      <p style="font-size:13px;color:#5f6368;margin-bottom:14px;">Add the names of all team members (at least one).</p>
+      <div id="members-list">
+        <div class="member-row"><div class="field-wrap"><input type="text" class="member-input" placeholder="Member 1 name" /></div></div>
+        <div class="member-row">
+          <div class="field-wrap"><input type="text" class="member-input" placeholder="Member 2 name" /></div>
+          <button type="button" class="btn-remove" onclick="removeMember(this)" aria-label="Remove">×</button>
+        </div>
+      </div>
+      <button type="button" class="btn-add-member" onclick="addMember()">＋ Add another member</button>
+      <span class="error-text" id="members-error">Please add at least one team member name.</span>
+    </div>
+
+    <!-- Payment -->
+    <div class="card" id="card-payment">
+      <span class="question-label">Registration Fee Payment <span class="req">*</span></span>
+      <p style="font-size:13px;color:#5f6368;margin-bottom:18px;">Scan the QR code below to pay, then enter your UTR number.</p>
+      <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:20px;">
+        <div style="border:5px solid #00b9f1;border-bottom-color:#1a237e;border-radius:16px;padding:8px;background:#fff;display:inline-block;box-shadow:0 4px 16px rgba(21,101,192,0.2);">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9502296882@ptaxis&pn=Hackathon&cu=INR" alt="UPI QR" width="200" height="200" style="display:block;border-radius:8px;" />
+        </div>
+        <p style="font-size:13px;color:#1565c0;font-weight:600;margin-top:10px;text-align:center;">📱 Scan &amp; Pay using any UPI app</p>
+        <p style="font-size:12px;color:#5f6368;margin-top:4px;text-align:center;">GPay · PhonePe · Paytm · Any UPI App</p>
+        <p style="font-size:12px;color:#5f6368;margin-top:4px;text-align:center;">UPI ID: <strong style="color:#202124;">9502296882@ptaxis</strong></p>
+      </div>
+      <span class="question-label" style="margin-bottom:8px;">UTR / Transaction Reference Number <span class="req">*</span></span>
+      <p style="font-size:12px;color:#5f6368;margin-bottom:10px;">Enter the 12-digit UTR from your UPI app after payment.</p>
+      <div class="field-wrap"><input type="text" id="utr" placeholder="e.g. 123456789012" maxlength="22" style="letter-spacing:1px;" /></div>
+      <span class="error-text" id="utr-error">Please enter a valid UTR / Transaction Reference Number.</span>
+    </div>
+
+    <!-- Terms -->
+    <div class="card" id="card-terms">
+      <span class="question-label">Terms &amp; Conditions <span class="req">*</span></span>
+      <div class="terms-box">By registering for this hackathon, you agree to abide by the event rules and code of conduct. All submitted projects must be original work created during the event. Teams must be composed of students currently enrolled in an educational institution. Organizers reserve the right to disqualify any team found violating these terms. Personal data collected will only be used for event purposes and will not be shared with third parties without consent. Participation implies agreement to be photographed or recorded during the event for promotional purposes.</div>
+      <label class="option-item"><input type="checkbox" id="terms" /> I have read and agree to the Terms &amp; Conditions</label>
+      <span class="error-text" id="terms-error">You must accept the terms to proceed.</span>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="card" style="border-left:5px solid #25D366;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="font-size:40px;flex-shrink:0;">💬</div>
+        <div>
+          <p style="font-size:15px;font-weight:600;color:#202124;margin-bottom:4px;">Join our WhatsApp Community</p>
+          <p style="font-size:13px;color:#5f6368;margin-bottom:12px;">Get updates, announcements, and connect with fellow participants.</p>
+          <a href="https://chat.whatsapp.com/CfTMPOHeY4Q4rYTprjYurA" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;text-decoration:none;padding:9px 20px;border-radius:6px;font-size:14px;font-weight:600;font-family:inherit;" onmouseover="this.style.background='#1ebe5d'" onmouseout="this.style.background='#25D366'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Join Community
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button type="submit" class="btn-submit">Submit</button>
+      <button type="button" class="btn-clear" onclick="clearForm()">Clear form</button>
+    </div>
+
+  </form>
+
+  <!-- Success Screen -->
+  <div class="success-screen" id="successScreen">
+    <div class="check-icon">🎉</div>
+    <h2>Registration Successful!</h2>
+    <p id="successMsg" style="font-size:15px;color:#202124;margin-bottom:8px;font-weight:500;"></p>
+    <p style="font-size:13px;color:#5f6368;margin-top:8px;">Our team will verify your payment and reach out to you soon.<br/>Stay tuned and join our WhatsApp community for updates!</p>
+    <div style="margin-top:20px;background:#f0fff4;border:1px solid #c6f6d5;border-radius:8px;padding:16px 20px;text-align:left;max-width:420px;margin-left:auto;margin-right:auto;">
+      <p style="font-size:13px;color:#276749;font-weight:600;margin-bottom:8px;">📋 Your Registration Summary</p>
+      <div id="summaryBox" style="font-size:13px;color:#2d3748;line-height:2;"></div>
+    </div>
+    <a href="https://chat.whatsapp.com/CfTMPOHeY4Q4rYTprjYurA" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;text-decoration:none;padding:10px 22px;border-radius:6px;font-size:14px;font-weight:600;margin-top:20px;" onmouseover="this.style.background='#1ebe5d'" onmouseout="this.style.background='#25D366'">
+      💬 Join WhatsApp Community
+    </a>
+  </div>
+
+  <script>
+    function addMember() {
+      const list = document.getElementById('members-list');
+      const count = list.querySelectorAll('.member-row').length + 1;
+      const row = document.createElement('div');
+      row.className = 'member-row';
+      row.innerHTML = `<div class="field-wrap"><input type="text" class="member-input" placeholder="Member ${count} name" /></div><button type="button" class="btn-remove" onclick="removeMember(this)" aria-label="Remove">×</button>`;
+      list.appendChild(row);
+    }
+
+    function removeMember(btn) {
+      const list = document.getElementById('members-list');
+      if (list.querySelectorAll('.member-row').length > 1) btn.parentElement.remove();
+    }
+
+    function clearForm() {
+      document.getElementById('regForm').reset();
+      document.querySelectorAll('.error-text').forEach(e => e.style.display = 'none');
+    }
+
+    function showError(id, msg) { const el = document.getElementById(id); if (el) { el.textContent = msg; el.style.display = 'block'; } }
+    function hideError(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
+    function scrollToCard(id) { const c = document.getElementById(id); if (c) c.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+
+    function validateForm() {
+      let valid = true, first = null;
+      const check = (cond, errId, msg, cardId) => { if (cond) { showError(errId, msg); if (!first) first = cardId; valid = false; } else hideError(errId); };
+
+      check(!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())), 'email-error', 'Please enter a valid email address.', 'card-email');
+      check(!document.getElementById('name').value.trim(), 'name-error', 'Please enter your full name.', 'card-name');
+      check(!(/^\d{10}$/.test(document.getElementById('phone').value.trim())), 'phone-error', 'Please enter a valid 10-digit phone number.', 'card-phone');
+      check(!document.querySelector('input[name="year"]:checked'), 'year-error', 'Please select your year of study.', 'card-year');
+      check(!document.getElementById('branch').value, 'branch-error', 'Please select your branch.', 'card-branch');
+      check(!document.getElementById('institution').value.trim(), 'institution-error', 'Please enter your institution name.', 'card-institution');
+      check(!document.getElementById('city').value.trim(), 'city-error', 'Please enter your city.', 'card-city');
+      check(!(/^\d{6}$/.test(document.getElementById('pincode').value.trim())), 'pincode-error', 'Please enter a valid 6-digit pincode.', 'card-pincode');
+      check(!document.querySelector('input[name="hackathon_exp"]:checked'), 'exp-error', 'Please select an option.', 'card-exp');
+      check(!document.getElementById('teamname').value.trim(), 'teamname-error', 'Please enter your team name.', 'card-teamname');
+      check(!Array.from(document.querySelectorAll('.member-input')).some(i => i.value.trim()), 'members-error', 'Please add at least one member.', 'card-members');
+      check(!document.getElementById('utr').value.trim() || document.getElementById('utr').value.trim().length < 8, 'utr-error', 'Please enter a valid UTR number.', 'card-payment');
+      check(!document.getElementById('terms').checked, 'terms-error', 'You must accept the terms.', 'card-terms');
+
+      if (first) scrollToCard(first);
+      return valid;
+    }
+
+    // ── Supabase REST API ──
+    const SB_URL = 'https://cftlvjzpkrltnkccnncf.supabase.co';
+    const SB_KEY = 'sb_publishable_X6Of0CfGS1dNyAjosyG_xQ_GEVhIg1J';
+
+    async function saveToSupabase(payload) {
+      const res = await fetch(`${SB_URL}/rest/v1/registrations`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err);
+      }
+    }
+
+    // ── Save to localStorage backup ──
+    function saveRegistration(row) {
+      const all = JSON.parse(localStorage.getItem('hackzen_registrations') || '[]');
+      all.push(row);
+      localStorage.setItem('hackzen_registrations', JSON.stringify(all));
+    }
+
+    // ── CSV download ──
+    function downloadCSV(rows, filename) {
+      const esc = v => { const s = String(v||''); return (s.includes(',')||s.includes('"')||s.includes('\n')) ? '"'+s.replace(/"/g,'""')+'"' : s; };
+      const csv = rows.map(r => r.map(esc).join(',')).join('\n');
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([csv],{type:'text/csv'})), download: filename });
+      a.click(); URL.revokeObjectURL(a.href);
+    }
+
+    function downloadAllRegistrations() {
+      const all = JSON.parse(localStorage.getItem('hackzen_registrations') || '[]');
+      if (!all.length) { alert('No registrations yet.'); return; }
+      downloadCSV([["Timestamp","Name","Email","Phone","Year","Branch","Institution","City","Pincode","Hackathon Experience","Team Name","Team Members","UTR"], ...all],
+        'HackZen_All_' + new Date().toISOString().slice(0,10) + '.csv');
+    }
+
+    document.getElementById('regForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      const btn = document.querySelector('.btn-submit');
+      btn.textContent = 'Saving...';
+      btn.disabled = true;
+
+      const members = Array.from(document.querySelectorAll('.member-input'))
+        .map(i => i.value.trim()).filter(v => v).join(', ');
+
+      const payload = {
+        name:          document.getElementById('name').value.trim(),
+        email:         document.getElementById('email').value.trim(),
+        phone:         document.getElementById('phone').value.trim(),
+        year:          document.querySelector('input[name="year"]:checked')?.value || '',
+        branch:        document.getElementById('branch').value,
+        institution:   document.getElementById('institution').value.trim(),
+        city:          document.getElementById('city').value.trim(),
+        pincode:       document.getElementById('pincode').value.trim(),
+        hackathon_exp: document.querySelector('input[name="hackathon_exp"]:checked')?.value || '',
+        teamname:      document.getElementById('teamname').value.trim(),
+        members,
+        utr:           document.getElementById('utr').value.trim()
+      };
+
+      try {
+        await saveToSupabase(payload);
+        console.log('✅ Saved to Supabase');
+
+        // local backup
+        const row = [new Date().toLocaleString('en-IN'), payload.name, payload.email,
+          payload.phone, payload.year, payload.branch, payload.institution,
+          payload.city, payload.pincode, payload.hackathon_exp,
+          payload.teamname, payload.members, payload.utr];
+        saveRegistration(row);
+
+        // Fill personalized success screen
+        const displayName = payload.name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+        document.getElementById('successMsg').textContent =
+          `Hey ${displayName}! You're all set. 🚀`;
+        document.getElementById('summaryBox').innerHTML = `
+          <b>Team:</b> ${payload.teamname}<br/>
+          <b>Members:</b> ${payload.members}<br/>
+          <b>Institution:</b> ${payload.institution}<br/>
+          <b>Email:</b> ${payload.email}<br/>
+          <b>UTR:</b> ${payload.utr}
+        `;
+
+        document.getElementById('regForm').style.display = 'none';
+        document.getElementById('successScreen').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } catch (err) {
+        console.error('Save error:', err);
+        btn.textContent = 'Submit';
+        btn.disabled = false;
+        alert('❌ Failed to save: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

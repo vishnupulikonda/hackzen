@@ -1,0 +1,81 @@
+============================================================
+EMAILJS TEMPLATE - Copy this into your EmailJS template
+============================================================
+
+SUBJECT:
+🚀 New HackZen Registration - {{teamname}} ({{name}})
+
+BODY (HTML template):
+------------------------------------------------------------
+
+<h2 style="color:#673ab7;">🚀 New HackZen Registration</h2>
+<p>A new participant has registered. Details below:</p>
+
+<table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;">
+  <tr style="background:#673ab7;color:#fff;">
+    <th style="padding:10px;text-align:left;">Field</th>
+    <th style="padding:10px;text-align:left;">Details</th>
+  </tr>
+  <tr style="background:#f9f9f9;">
+    <td style="padding:10px;border:1px solid #ddd;"><b>Full Name</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{name}}</td>
+  </tr>
+  <tr>
+    <td style="padding:10px;border:1px solid #ddd;"><b>Email</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{email}}</td>
+  </tr>
+  <tr style="background:#f9f9f9;">
+    <td style="padding:10px;border:1px solid #ddd;"><b>Phone</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{phone}}</td>
+  </tr>
+  <tr>
+    <td style="padding:10px;border:1px solid #ddd;"><b>Year of Study</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{year}}</td>
+  </tr>
+  <tr style="background:#f9f9f9;">
+    <td style="padding:10px;border:1px solid #ddd;"><b>Branch</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{branch}}</td>
+  </tr>
+  <tr>
+    <td style="padding:10px;border:1px solid #ddd;"><b>Institution</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{institution}}</td>
+  </tr>
+  <tr style="background:#f9f9f9;">
+    <td style="padding:10px;border:1px solid #ddd;"><b>City</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{city}}</td>
+  </tr>
+  <tr>
+    <td style="padding:10px;border:1px solid #ddd;"><b>Pincode</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{pincode}}</td>
+  </tr>
+  <tr style="background:#f9f9f9;">
+    <td style="padding:10px;border:1px solid #ddd;"><b>Hackathon Experience</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{hackathon_exp}}</td>
+  </tr>
+  <tr>
+    <td style="padding:10px;border:1px solid #ddd;"><b>Team Name</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{teamname}}</td>
+  </tr>
+  <tr style="background:#f9f9f9;">
+    <td style="padding:10px;border:1px solid #ddd;"><b>Team Members</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{members}}</td>
+  </tr>
+  <tr>
+    <td style="padding:10px;border:1px solid #ddd;"><b>UTR / Transaction ID</b></td>
+    <td style="padding:10px;border:1px solid #ddd;color:green;"><b>{{utr}}</b></td>
+  </tr>
+  <tr style="background:#f9f9f9;">
+    <td style="padding:10px;border:1px solid #ddd;"><b>Submitted At</b></td>
+    <td style="padding:10px;border:1px solid #ddd;">{{submitted_at}}</td>
+  </tr>
+</table>
+
+<br/>
+<p style="color:#888;font-size:12px;">This email was sent automatically from the HackZen Registration Form.</p>
+
+============================================================
+VARIABLES used (all auto-filled from form):
+{{name}}, {{email}}, {{phone}}, {{year}}, {{branch}},
+{{institution}}, {{city}}, {{pincode}}, {{hackathon_exp}},
+{{teamname}}, {{members}}, {{utr}}, {{submitted_at}}
+============================================================

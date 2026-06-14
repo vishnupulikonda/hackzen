@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackZen Admin Panel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0ebf8; min-height: 100vh; padding: 30px 16px; }
+
+    .header { max-width: 1100px; margin: 0 auto 24px; background: linear-gradient(135deg, #050d1a, #302b63); border-radius: 12px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    .header h1 { color: #fff; font-size: 22px; font-weight: 700; }
+    .header h1 span { background: linear-gradient(135deg, #00b4ff, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .header p { color: rgba(255,255,255,0.65); font-size: 13px; margin-top: 4px; }
+
+    .stats-row { max-width: 1100px; margin: 0 auto 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .stat-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center; }
+    .stat-card .num { font-size: 32px; font-weight: 700; color: #673ab7; }
+    .stat-card .label { font-size: 12px; color: #5f6368; margin-top: 4px; }
+
+    .actions-bar { max-width: 1100px; margin: 0 auto 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .btn { padding: 9px 18px; border-radius: 6px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s; }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: #673ab7; color: #fff; }
+    .btn-success { background: #1e8e3e; color: #fff; }
+    .btn-danger  { background: #d93025; color: #fff; }
+    .btn-outline { background: #fff; color: #673ab7; border: 1px solid #673ab7; }
+
+    .search-box { margin-left: auto; padding: 8px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; font-family: inherit; width: 220px; outline: none; }
+    .search-box:focus { border-color: #673ab7; }
+
+    .table-wrap { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); overflow: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead tr { background: #673ab7; color: #fff; }
+    thead th { padding: 12px 14px; text-align: left; white-space: nowrap; font-weight: 600; }
+    tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
+    tbody tr:hover { background: #f9f5ff; }
+    tbody td { padding: 11px 14px; color: #202124; white-space: nowrap; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+
+    .badge-yes { background: #e6f4ea; color: #1e8e3e; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+    .badge-no  { background: #fce8e6; color: #d93025; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+
+    .empty-state { text-align: center; padding: 60px 20px; color: #9e9e9e; }
+    .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state p { font-size: 15px; }
+
+    .password-screen { max-width: 400px; margin: 80px auto; background: #fff; border-radius: 12px; padding: 36px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); text-align: center; }
+    .password-screen h2 { font-size: 20px; color: #202124; margin-bottom: 8px; }
+    .password-screen p { font-size: 13px; color: #5f6368; margin-bottom: 20px; }
+    .password-screen input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; outline: none; margin-bottom: 12px; font-family: inherit; }
+    .password-screen input:focus { border-color: #673ab7; }
+    .error-msg { color: #d93025; font-size: 13px; margin-top: 8px; display: none; }
+
+    @media (max-width: 600px) { .search-box { width: 100%; margin-left: 0; } }
+  </style>
+</head>
+<body>
+
+  <!-- Password Gate -->
+  <div class="password-screen" id="passwordScreen">
+    <div style="font-size:40px;margin-bottom:12px;">🔐</div>
+    <h2>Admin Panel</h2>
+    <p>Enter the admin password to view registrations</p>
+    <input type="password" id="passwordInput" placeholder="Enter password"
+      onkeydown="if(event.key==='Enter') checkPassword()" />
+    <button class="btn btn-primary" style="width:100%" onclick="checkPassword()">Login</button>
+    <p class="error-msg" id="pwError">Incorrect password. Try again.</p>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="adminPanel" style="display:none;">
+
+    <div class="header">
+      <div>
+        <h1>HackZen <span>Admin Panel</span></h1>
+        <p id="dbStatus">⏳ Connecting to database...</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="index.html" class="btn btn-outline" style="text-decoration:none;">← Back to Form</a>
+        <button class="btn btn-danger" onclick="confirmClear()">🗑️ Clear All</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card"><div class="num" id="totalCount">0</div><div class="label">Total Registrations</div></div>
+      <div class="stat-card"><div class="num" id="yesCount">0</div><div class="label">Had Hackathon Before</div></div>
+      <div class="stat-card"><div class="num" id="noCount">0</div><div class="label">First Timers</div></div>
+      <div class="stat-card"><div class="num" id="teamCount">0</div><div class="label">Unique Teams</div></div>
+    </div>
+
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <button class="btn btn-success" onclick="downloadAll()">⬇️ Download All CSV</button>
+      <button class="btn btn-primary" onclick="refreshTable()">🔄 Refresh</button>
+      <input type="text" class="search-box" id="searchBox"
+        placeholder="🔍 Search name, team, email..." oninput="filterTable()" />
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Timestamp</th><th>Name</th><th>Email</th><th>Phone</th>
+            <th>Year</th><th>Branch</th><th>Institution</th><th>City</th><th>Pincode</th>
+            <th>Exp.</th><th>Team Name</th><th>Team Members</th><th>UTR</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="icon">📋</div>
+        <p>No registrations yet. They'll appear here after someone submits the form.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ============================================================
+    // Supabase REST API credentials
+    // ============================================================
+    const SB_URL = 'https://cftlvjzpkrltnkccnncf.supabase.co';
+    const SB_KEY = 'sb_publishable_X6Of0CfGS1dNyAjosyG_xQ_GEVhIg1J';
+
+    const SB_HEADERS = {
+      'apikey': SB_KEY,
+      'Authorization': 'Bearer ' + SB_KEY,
+      'Content-Type': 'application/json'
+    };
+
+    const ADMIN_PASSWORD = "hackzen2026";
+
+    function checkPassword() {
+      const val = document.getElementById('passwordInput').value;
+      if (val === ADMIN_PASSWORD) {
+        document.getElementById('passwordScreen').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        loadData();
+      } else {
+        document.getElementById('pwError').style.display = 'block';
+      }
+    }
+
+    const CSV_HEADERS = [
+      "Timestamp","Name","Email","Phone","Year","Branch",
+      "Institution","City","Pincode","Hackathon Experience",
+      "Team Name","Team Members","UTR / Transaction ID"
+    ];
+
+    let allData = [];
+
+    async function loadData() {
+      const statusEl = document.getElementById('dbStatus');
+      statusEl.textContent = '⏳ Loading from Supabase...';
+      try {
+        const res = await fetch(`${SB_URL}/rest/v1/registrations?select=*&order=created_at.desc`, {
+          headers: SB_HEADERS
+        });
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+
+        allData = data.map(r => [
+          new Date(r.created_at).toLocaleString('en-IN'),
+          r.name, r.email, r.phone, r.year, r.branch,
+          r.institution, r.city, r.pincode, r.hackathon_exp,
+          r.teamname, r.members, r.utr
+        ]);
+        statusEl.textContent = '🟢 Connected to Supabase · ' + allData.length + ' registrations';
+      } catch (err) {
+        statusEl.textContent = '❌ Error: ' + err.message;
+        allData = JSON.parse(localStorage.getItem('hackzen_registrations') || '[]');
+      }
+      renderTable(allData);
+      updateStats(allData);
+    }
+
+    function updateStats(data) {
+      document.getElementById('totalCount').textContent = data.length;
+      document.getElementById('yesCount').textContent   = data.filter(r => r[9] === 'Yes').length;
+      document.getElementById('noCount').textContent    = data.filter(r => r[9] === 'No').length;
+      document.getElementById('teamCount').textContent  = new Set(data.map(r => r[10])).size;
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('tableBody');
+      const empty = document.getElementById('emptyState');
+      if (data.length === 0) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      tbody.innerHTML = data.map((row, i) => `
+        <tr>
+          <td style="color:#9e9e9e;font-size:12px;">${i + 1}</td>
+          ${row.map((cell, ci) => ci === 9
+            ? `<td><span class="${cell === 'Yes' ? 'badge-yes' : 'badge-no'}">${cell}</span></td>`
+            : `<td title="${escapeHtml(cell)}">${escapeHtml(cell)}</td>`
+          ).join('')}
+        </tr>`).join('');
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function filterTable() {
+      const q = document.getElementById('searchBox').value.toLowerCase();
+      const filtered = allData.filter(row => row.some(c => String(c).toLowerCase().includes(q)));
+      renderTable(filtered);
+      updateStats(filtered);
+    }
+
+    function refreshTable() { document.getElementById('searchBox').value = ''; loadData(); }
+
+    function escapeCSV(val) {
+      const str = String(val || '');
+      return (str.includes(',') || str.includes('"') || str.includes('\n'))
+        ? '"' + str.replace(/"/g,'""') + '"' : str;
+    }
+
+    function downloadAll() {
+      if (allData.length === 0) { alert('No registrations to download.'); return; }
+      const csv  = [CSV_HEADERS, ...allData].map(r => r.map(escapeCSV).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url;
+      a.download = 'HackZen_Registrations_' + new Date().toISOString().slice(0,10) + '.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function confirmClear() {
+      if (!confirm('⚠️ This will permanently delete ALL data from Supabase. Are you sure?')) return;
+      fetch(`${SB_URL}/rest/v1/registrations?id=neq.00000000-0000-0000-0000-000000000000`, {
+        method: 'DELETE', headers: SB_HEADERS
+      }).then(res => {
+        if (!res.ok) { res.text().then(t => alert('Delete failed: ' + t)); return; }
+        localStorage.removeItem('hackzen_registrations');
+        allData = []; renderTable([]); updateStats([]);
+        document.getElementById('dbStatus').textContent = '🟢 All data cleared.';
+      });
+    }
+  </script>
+</body>
+</html>
